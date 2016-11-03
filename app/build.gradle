@@ -35,7 +35,6 @@ android {
 dependencies {
     repositories {
         maven {url "http://repo1.maven.org/maven2"}
-        jcenter {url "http://jcenter.bintray.com/"}
     }
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.0.0'

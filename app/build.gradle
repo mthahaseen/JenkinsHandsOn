@@ -12,10 +12,21 @@ android {
         versionName "1.0"
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled false
         }
     }
 }
@@ -23,7 +34,8 @@ android {
 
 dependencies {
     repositories {
-        maven {url "http://repo1.maven.org/maven2" }
+        maven {url "http://repo1.maven.org/maven2"}
+        jcenter {url "http://jcenter.bintray.com/"}
     }
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.0.0'
@@ -31,3 +43,44 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
 }
+
+// Jacoco config
+apply plugin: 'jacoco'
+
+jacoco {
+    // Use this version for upper ones are broken (with Gradle)
+    // https://github.com/jacoco/jacoco/issues/288
+    toolVersion = "0.7.7.201606060606"
+}
+
+// Edit covered scope if needed
+// For my part I like having the coverage of both application and tests
+def coverageSourceDirs = [
+        '../app/src'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testUnitTestDebug.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+}
+//end Jacoco config

@@ -28,4 +28,11 @@ public class UserTest {
         Assert.assertEquals("Thaha", u.getName());
     }
 
+    @Test
+    public void UserNameTest2() {
+        User u = new User();
+        u.setName("Mohan");
+        Assert.assertEquals("Mohan", u.getName());
+    }
+
 }

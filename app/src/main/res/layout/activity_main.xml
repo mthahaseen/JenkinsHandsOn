@@ -15,9 +15,16 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/changeText"
+        android:id="@+id/getAddress"
         android:layout_below="@+id/inputField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change"/>
+        android:text="Get Location"
+        android:onClick="fetchAddressButtonHandler" />
+
+    <TextView
+        android:id="@+id/location_address_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getAddress"/>
 </RelativeLayout>

@@ -25,7 +25,6 @@ public class MainActivityTest {
     public void ensureTextChangesWork() {
         onView(withId(R.id.inputField))
                 .perform(typeText("HELLO"), closeSoftKeyboard());
-        onView(withId(R.id.changeText)).perform(click());
         onView(withId(R.id.inputField)).check(matches(withText("HelloWorld!")));
     }
 
